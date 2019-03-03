@@ -16,10 +16,12 @@ namespace AdvertApi.Services
             _mapper = mapper;
         }
 
+
+
         public async Task<string> Add(AdvertModel model)
         {
             var dbModel = _mapper.Map<AdvertDbModel>(model);
-            dbModel.Id = new Guid().ToString();
+            dbModel.Id = Guid.NewGuid().ToString();
             dbModel.CreationDateTime = DateTime.UtcNow;
             dbModel.Status = AdvertStatus.Pending;
 
@@ -32,6 +34,16 @@ namespace AdvertApi.Services
             }
 
             return dbModel.Id;
+        }
+
+        public async Task<bool> CheckHealthAsync()
+        {
+            using (var client = new AmazonDynamoDBClient())
+            {
+                var tableData = await client.DescribeTableAsync("Adverts");
+
+                return string.Compare(tableData.Table.TableStatus, "active", true) == 0;
+            }
         }
 
         public async Task Confirm(ConfirmAdvertModel model)
@@ -47,6 +59,7 @@ namespace AdvertApi.Services
                     }
                     if (model.Status == AdvertStatus.Active)
                     {
+                        record.FilePath = model.FilePath;
                         record.Status = AdvertStatus.Active;
                         await context.SaveAsync(record);
                     }

@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>rmarshall9n.AdvertApi.Models</PackageId>
+    <Authors>Ryan M.</Authors>
+    <Company>None</Company>
+    <Product>Web Advert Microservices</Product>
+    <PackageProjectUrl>https://github.com/rmarshall9n/WebAdvert.AdvertApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rmarshall9n/WebAdvert.AdvertApi</RepositoryUrl>
+    <Version>1.0.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
